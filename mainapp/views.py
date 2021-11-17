@@ -7,7 +7,7 @@ def index(request):
     context = {
         'title': 'geekshop',
     }
-    return render(request, 'index.html', context)
+    return render(request, 'mainapp/index.html', context)
 
 
 def products(request):
@@ -52,4 +52,4 @@ def products(request):
              },
         ]
     }
-    return render(request, 'products.html', context)
+    return render(request, 'mainapp/products.html', context)
