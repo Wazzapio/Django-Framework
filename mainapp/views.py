@@ -11,13 +11,11 @@ def index(request):
 
 
 def products(request):
-    allCategories = ProductCategory.objects.all()
-    allProducts = Product.objects.all()
-
     context = {
         'title': 'geekshop - Продукты',
     }
-    context['categories'] = allCategories
-    context['products'] = allProducts
+
+    context['products'] = Product.objects.all()
+    context['categories'] = ProductCategory.objects.all()
 
     return render(request, 'mainapp/products.html', context)
