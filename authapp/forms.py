@@ -1,9 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
-from django.core.exceptions import ValidationError
 
 from authapp.models import User
-from authapp.validator import validate_name
+from authapp.validator import validate_first_name, validate_last_name
 
 
 class UserLoginForm(AuthenticationForm):
@@ -30,6 +29,8 @@ class UserLoginForm(AuthenticationForm):
 
 
 class UserRegisterForm(UserCreationForm):
+    first_name = forms.CharField(widget=forms.TextInput(), validators=[validate_first_name])
+    last_name = forms.CharField(widget=forms.TextInput(), validators=[validate_last_name])
     class Meta:
         model = User
         fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
@@ -47,12 +48,14 @@ class UserRegisterForm(UserCreationForm):
             field.widget.attrs['class'] = 'form-control py-4'
 
 class UserProfileForm(UserChangeForm):
-    image = forms.ImageField(widget=forms.FileInput(),required=False)
+    first_name = forms.CharField(widget=forms.TextInput(), validators=[validate_first_name])
+    last_name = forms.CharField(widget=forms.TextInput(), validators=[validate_last_name])
+    image = forms.ImageField(widget=forms.FileInput(), required=False)
     age = forms.IntegerField(widget=forms.NumberInput(), required=False)
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name','image','age')
+        fields = ('username', 'email', 'first_name', 'last_name', 'image', 'age')
 
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)

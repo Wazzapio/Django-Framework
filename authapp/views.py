@@ -38,7 +38,7 @@ def register(request):
             messages.success(request, 'Вы успешно зарегистрировались')
             return HttpResponseRedirect(reverse('authapp:login'))
         else:
-            print(form.errors)
+            messages.error(request, form.errors)
     else:
         form = UserRegisterForm()
     context = {
@@ -53,8 +53,9 @@ def profile(request):
         form = UserProfileForm(instance=request.user, data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Вы успешно измнили данные')
         else:
-            print(form.errors)
+            messages.error(request, form.errors)
 
     context = {
         'title': 'Geekshop | Профайл',
