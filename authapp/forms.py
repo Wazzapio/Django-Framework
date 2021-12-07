@@ -31,6 +31,7 @@ class UserLoginForm(AuthenticationForm):
 class UserRegisterForm(UserCreationForm):
     first_name = forms.CharField(widget=forms.TextInput(), validators=[validate_first_name])
     last_name = forms.CharField(widget=forms.TextInput(), validators=[validate_last_name])
+
     class Meta:
         model = User
         fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2')
