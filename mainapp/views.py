@@ -19,3 +19,10 @@ def products(request):
     context['categories'] = ProductCategory.objects.all()
 
     return render(request, 'mainapp/products.html', context)
+
+def detail(request, id):
+    context = {
+        'product': Product.objects.get(id=id)
+    }
+
+    return render(request, 'mainapp/detail.html', context)
