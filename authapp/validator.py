@@ -24,3 +24,10 @@ def validate_last_name(value):
             _(f'Фамилия не может содержать цифры'),
             params={'value': value}
         )
+
+# def validate_image(value):
+#     if value.size > 300000:
+#         raise ValidationError(
+#             _(f'Размер картинки больше 300КБ'),
+#             params={'value': value}
+#         )
