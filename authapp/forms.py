@@ -48,6 +48,7 @@ class UserRegisterForm(UserCreationForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control py-4'
 
+
 class UserProfileForm(UserChangeForm):
     first_name = forms.CharField(widget=forms.TextInput(), validators=[validate_first_name])
     last_name = forms.CharField(widget=forms.TextInput(), validators=[validate_last_name])
