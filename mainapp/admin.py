@@ -11,6 +11,6 @@ class Product(admin.ModelAdmin):
 
     list_display = ('name', 'price', 'quantity', 'category')
     fields = ('name', 'description', 'price', 'quantity', 'category')
-    readonly_fields = ('description',)
+    # readonly_fields = ('description',)
     ordering = ('name', 'price')
     search_fields = ('name',)
