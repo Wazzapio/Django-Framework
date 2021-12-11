@@ -4,9 +4,9 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid">
-                <h1 class="mt-4">Редактирование Категории | {{ category_select.name }}</h1>
+                <h1 class="mt-4">Редактирование Категории | {{ category.name }}</h1>
                 <div class="card-body">
-                    <form action="{% url 'admins:admin_categories_update' category_select.id %}" method="post">
+                    <form action="{% url 'admins:admin_categories_update' category.id %}" method="post">
                         {% csrf_token %}
                         <div class="form-row">
                             <div class="col-lg-6">
@@ -19,7 +19,8 @@
                         <div class="form-row">
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="small mb-1" for="{{ form.description.id_for_label }}">Описание</label>
+                                    <label class="small mb-1"
+                                           for="{{ form.description.id_for_label }}">Описание</label>
                                     {{ form.description }}
                                 </div>
                             </div>
@@ -30,14 +31,14 @@
                             </div>
                         </div>
                     </form>
-                    <form action="{% url 'admins:admin_categories_delete' category_select.id %}" method="post">
-                        {% csrf_token %}
-                        <div class="row">
-                            <div class="col-lg-6" style="margin-top: 33px;">
-                                <input class="btn btn-danger btn-block" type="submit" value="Удалить">
-                            </div>
-                        </div>
-                    </form>
+                    {#                    <form action="{% url 'admins:admin_categories_delete' category.id %}" method="post">#}
+                    {#                        {% csrf_token %}#}
+                    {#                        <div class="row">#}
+                    {#                            <div class="col-lg-6" style="margin-top: 33px;">#}
+                    {#                                <input class="btn btn-danger btn-block" type="submit" value="Удалить">#}
+                    {#                            </div>#}
+                    {#                        </div>#}
+                    {#                    </form>#}
                 </div>
             </div>
         </main>
