@@ -1,48 +1,31 @@
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
-from django.views.generic import DetailView
+from django.views.generic import DetailView, TemplateView, ListView
 
+from mainapp.mixin import BaseClassContextMixin, UserDispatchMixin
 from mainapp.models import ProductCategory, Product
 
 
 # Create your views here.
 
-def index(request):
-    context = {
-        'title': 'geekshop',
-    }
-    return render(request, 'mainapp/index.html', context)
+
+class IndexTemplateView(TemplateView, BaseClassContextMixin):
+    template_name = 'mainapp/index.html'
+    title = 'geekshop'
 
 
-def products(request, id_category=None, page=1):
-    context = {
-        'title': 'geekshop | Каталог',
-    }
+class CatalogListView(ListView):
+    model = Product
+    template_name = 'mainapp/products.html'
+    title = 'geekshop | Каталог'
+    paginate_by = 3
+    categories = ProductCategory.objects.all()
 
-    if id_category:
-        products = Product.objects.filter(category_id=id_category)
-    else:
-        products = Product.objects.all()
-
-    paginator = Paginator(products, per_page=3)
-
-    try:
-        products_paginator = paginator.page(page)
-    except PageNotAnInteger:
-        products_paginator = paginator.page(1)
-    except EmptyPage:
-        products_paginator = paginator.page(paginator.num_pages)
-
-    context['products'] = products_paginator
-    context['categories'] = ProductCategory.objects.all()
-    return render(request, 'mainapp/products.html', context)
-
-# def detail(request, id):
-#     context = {
-#         'product': Product.objects.get(id=id)
-#     }
-#
-#     return render(request, 'mainapp/detail.html', context)
+    def get_context_data(self, **kwargs):
+        context = super(CatalogListView, self).get_context_data(**kwargs)
+        context['title'] = self.title
+        context['categories'] = self.categories
+        return context
 
 
 class ProductDetail(DetailView):

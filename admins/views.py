@@ -123,11 +123,3 @@ class ProductsDeleteView(DeleteView, BaseClassContextMixin, CustomDispatchMixin)
         self.object = self.get_object()
         self.object.delete()
         return HttpResponseRedirect(self.get_success_url())
-
-# @user_passes_test(lambda u: u.is_superuser)
-# def admin_products_delete(request, pk):
-#     if request.method == 'POST':
-#         product = Product.objects.get(pk=pk)
-#         product.delete()
-#
-#     return HttpResponseRedirect(reverse('admins:admin_products'))
