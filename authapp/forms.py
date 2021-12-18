@@ -29,8 +29,8 @@ class UserLoginForm(AuthenticationForm):
 
 
 class UserRegisterForm(UserCreationForm):
-    first_name = forms.CharField(widget=forms.TextInput(), validators=[validate_first_name])
-    last_name = forms.CharField(widget=forms.TextInput(), validators=[validate_last_name])
+    first_name = forms.CharField(widget=forms.TextInput())
+    last_name = forms.CharField(widget=forms.TextInput())
 
     class Meta:
         model = User
@@ -50,8 +50,8 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserProfileForm(UserChangeForm):
-    first_name = forms.CharField(widget=forms.TextInput(), validators=[validate_first_name])
-    last_name = forms.CharField(widget=forms.TextInput(), validators=[validate_last_name])
+    first_name = forms.CharField(widget=forms.TextInput())
+    last_name = forms.CharField(widget=forms.TextInput())
     image = forms.ImageField(widget=forms.FileInput(), required=False)
     age = forms.IntegerField(widget=forms.NumberInput(), required=False)
 
