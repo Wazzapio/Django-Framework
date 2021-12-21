@@ -50,11 +50,11 @@ class UserDeleteView(DeleteView, BaseClassContextMixin, CustomDispatchMixin):
     success_url = reverse_lazy('admins:admin_users')
     title = 'Админка | Удалить пользователя'
 
-    def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        self.object.is_active = False
-        self.object.save()
-        return HttpResponseRedirect(self.get_success_url())
+    # def delete(self, request, *args, **kwargs):
+    #     self.object = self.get_object()
+    #     self.object.is_active = False
+    #     self.object.save()
+    #     return HttpResponseRedirect(self.get_success_url())
 
 
 class CategoriesListView(ListView, BaseClassContextMixin, CustomDispatchMixin):

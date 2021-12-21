@@ -9,4 +9,5 @@ urlpatterns = [
     path('register/', ProfileCreateView.as_view(), name='register'),
     path('profile/', ProfileUpdateView.as_view(), name='profile'),
     path('logout/', Logout.as_view(), name='logout'),
+    path('verify/<str:email>/<str:activate_key>/', ProfileCreateView.verify, name='verify'),
 ]
