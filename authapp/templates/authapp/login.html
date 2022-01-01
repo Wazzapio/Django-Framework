@@ -35,7 +35,13 @@
                 </form>
             </div>
             <div class="card-footer text-center">
-                <div class="small"><a href="{% url 'authapp:register' %}">Нужен аккаунт? Зарегистрируйся!</a></div>
+                <div class="small"><a href="{% url 'authapp:register' %}">Нужен аккаунт? Зарегистрируйся!</a>
+                    <div class="list-group-horizontal text-center">
+                        <a href="{% url 'social:begin' 'vk-oauth2' %}?next='/'">
+                            <i class="fab fa-vk"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

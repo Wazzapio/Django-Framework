@@ -1,18 +1,13 @@
-
 from django.conf import settings
 from django.contrib import messages, auth
 from django.contrib.auth.views import LoginView, LogoutView
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
-
-# Create your views here.
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import UpdateView, FormView
-
-from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm
+from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm, UserProfileEditForm
 from authapp.models import User
-from baskets.models import Basket
 from mainapp.mixin import BaseClassContextMixin, UserDispatchMixin
 
 
@@ -78,19 +73,27 @@ class ProfileUpdateView(UpdateView, BaseClassContextMixin, UserDispatchMixin):
     success_url = reverse_lazy('authapp:profile')
     title = 'Geekshop | Обновить пользователя'
 
-    def form_valid(self, form):
-        messages.set_level(self.request, messages.SUCCESS)
-        messages.success(self.request, 'Вы успешно измнили данные')
-        super().form_valid(form)
-        return HttpResponseRedirect(self.get_success_url())
+    def post(self, request, *args, **kwargs):
+        form = UserProfileForm(data=request.POST, files=request.FILES, instance=request.user)
+        profile_form = UserProfileEditForm(request.POST, instance=request.user.userprofile)
+
+        if form.is_valid() and profile_form.is_valid():
+            messages.set_level(request, messages.SUCCESS)
+            messages.success(request, 'Вы успешно изменили данные.')
+            form.save()
+            return HttpResponseRedirect(reverse('authapp:profile'))
+        else:
+            messages.set_level(request, messages.ERROR)
+            messages.error(request, form.errors)
+        return redirect(self.success_url)
 
     def get_object(self, *args, **kwargs):
         return get_object_or_404(User, pk=self.request.user.pk)
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(ProfileUpdateView, self).get_context_data(**kwargs)
-    #     context['baskets'] = Basket.objects.filter(user=self.request.user)
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super(ProfileUpdateView, self).get_context_data(**kwargs)
+        context['profile'] = UserProfileEditForm(instance=self.request.user.userprofile)
+        return context
 
 
 # @login_required
