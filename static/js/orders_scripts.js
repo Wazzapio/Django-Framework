@@ -82,7 +82,7 @@ window.onload = function () {
                             quantity_arr[orderitem_num] = 0;
                         }
                         let price_html = '<span class="orderitems-' + orderitem_num + '-price">'
-                            + data.price.toString().replace('.',',') + '</span> руб';
+                            + data.price.toString().replace('.', ',') + '</span> руб';
                         let current_tr = $('.order_form table').find('tr:eq(' + (orderitem_num + 1) + ')');
                         current_tr.find('td:eq(2)').html(price_html)
                     }
@@ -90,5 +90,17 @@ window.onload = function () {
             });
         }
     });
+
+    $('.basket_list').on('click', 'input[type = "number"]', function () {
+        let t_href = event.target
+        $.ajax(
+            {
+                url: "/baskets/edit/" + t_href.name + "/" + t_href.value + "/",
+                success: function (data) {
+                    $('.basket_list').html(data.result)
+                },
+            });
+        event.preventDefault()
+    })
 
 };
