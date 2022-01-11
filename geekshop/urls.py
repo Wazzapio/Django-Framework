@@ -20,6 +20,8 @@ from django.conf.urls.static import static
 
 from mainapp.views import IndexTemplateView
 
+import debug_toolbar
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', IndexTemplateView.as_view(), name='index'),
@@ -31,4 +33,6 @@ urlpatterns = [
     path('orders/', include('ordersapp.urls', namespace='orders')),
 ]
 
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += [path(r'debug/', include(debug_toolbar.urls))]
