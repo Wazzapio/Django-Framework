@@ -27,7 +27,7 @@ class OrderList(ListView, BaseClassContextMixin):
 
     @method_decorator(login_required())
     def dispatch(self, *args, **kwargs):
-        return super(ListView, self).dispatch(*args, **kwargs)de
+        return super(ListView, self).dispatch(*args, **kwargs)
 
 
 class OrderCreate(CreateView, BaseClassContextMixin):
