@@ -1,0 +1,6 @@
+http://194.67.112.52/
+http://194.67.112.52/products/
+http://194.67.112.52/products/detail/2/
+http://127.0.0.1:8000/users/profile/
+http://194.67.112.52/orders/
+http://194.67.112.52/orders/update/1/
