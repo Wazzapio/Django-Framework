@@ -159,7 +159,7 @@ LOGIN_URL = '/users/login'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_ERROR_URL = '/users/login'
 
-DOMAIN_NAME = 'http://194.67.112.52/'
+DOMAIN_NAME = 'http://194.67.112.52'
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
