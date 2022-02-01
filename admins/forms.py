@@ -2,20 +2,26 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db import models
 
-from authapp.forms import UserRegisterForm, UserProfileForm
+from authapp.forms import UserProfileForm
 from authapp.models import User
 from mainapp.models import ProductCategory, Product
 
 
-class UserAdminCreateForm(UserRegisterForm):
+class UserAdminCreateForm(UserCreationForm):
     image = forms.ImageField(widget=forms.FileInput(), required=False)
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'image', 'age', 'first_name', 'last_name', 'password1', 'password2')
+        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2', 'age', 'image')
 
     def __init__(self, *args, **kwargs):
-        super(UserAdminCreateForm, self).__init__(*args, **kwargs)
+        super(UserCreationForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs['placeholder'] = 'Введите имя пользователя'
+        self.fields['email'].widget.attrs['placeholder'] = 'Введите адресс эл.почты'
+        self.fields['first_name'].widget.attrs['placeholder'] = 'Введите имя'
+        self.fields['last_name'].widget.attrs['placeholder'] = 'Введите фамилию'
+        self.fields['password1'].widget.attrs['placeholder'] = 'Введите пароль'
+        self.fields['password2'].widget.attrs['placeholder'] = 'Повторите пароль'
 
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control py-4'

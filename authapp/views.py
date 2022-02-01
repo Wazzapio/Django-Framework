@@ -78,9 +78,9 @@ class ProfileUpdateView(UpdateView, BaseClassContextMixin, UserDispatchMixin):
         profile_form = UserProfileEditForm(request.POST, instance=request.user.userprofile)
 
         if form.is_valid() and profile_form.is_valid():
+            form.save()
             messages.set_level(request, messages.SUCCESS)
             messages.success(request, 'Вы успешно изменили данные.')
-            form.save()
             return HttpResponseRedirect(reverse('authapp:profile'))
         else:
             messages.set_level(request, messages.ERROR)

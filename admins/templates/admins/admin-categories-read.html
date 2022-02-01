@@ -4,6 +4,18 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid">
+                {% if messages %}
+                    {% for mes in messages %}
+                        <div class="alert {% if mes.level != 40 %} alert-success {% else %} alert-warning {% endif %} alert-dismissible fade show"
+                             role="alert"
+                             style="margin-top: 50px;">
+                            {{ mes }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
                 <h1 class="mt-4">Категории</h1>
                 <div class="card mb-4">
                     <div class="card-header">
@@ -17,6 +29,8 @@
                                 <tr>
                                     <th>Название</th>
                                     <th>Описание</th>
+                                    <th>Активная</th>
+                                    <th>Удалить/Восстановить</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -25,6 +39,38 @@
                                         <td><a href="{% url 'admins:admin_categories_update' category.id %}"
                                                style="color: dodgerblue">{{ category.name }}</a></td>
                                         <td>{{ category.description }}</td>
+                                        <td class="text-center">
+                                            {% if category.is_active %}
+                                                <i class="fas fa-check-circle"></i>
+                                            {% else %}
+                                                <i class="fas fa-times-circle"></i>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if category.is_active %}
+                                                <form action="{% url 'admins:admin_categories_delete' category.id %}"
+                                                      method="post">
+                                                    {% csrf_token %}
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <input class="btn btn-danger btn-block" type="submit"
+                                                                   value="Удалить">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            {% else %}
+                                                <form action="{% url 'admins:admin_categories_activate' category.id %}"
+                                                      method="post">
+                                                    {% csrf_token %}
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <input class="btn btn-success btn-block" type="submit"
+                                                                   value="Восстановить">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            {% endif %}
+                                        </td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
